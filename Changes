@@ -1,5 +1,12 @@
 Revision history for Text-MiniTmpl
 
+1.1.0	Fri Nov 26 14:34:33 EET 2010
+	Speedup in 2 times.
+	Added raw() to disable Unicode (and speedup in 1.5 times more).
+	Added source filters support.
+	Benchmark results added to documentation.
+	More tests added.
+
 1.0.0	Fri Nov 26 01:01:19 EET 2010
 	Initial public release.
 

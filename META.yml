@@ -5,6 +5,7 @@ author:
 build_requires:
   Cwd: 0
   ExtUtils::MakeMaker: 6.42
+  Filter::CommaEquals: 0
   Test::Exception: 0
   Test::MockModule: 0
   Test::More: 0
@@ -35,4 +36,4 @@ requires:
   version: 0
 resources:
   license: http://opensource.org/licenses/mit-license.php
-version: 1.000000
+version: 1.001000

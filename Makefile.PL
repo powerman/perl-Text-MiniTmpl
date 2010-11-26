@@ -15,6 +15,7 @@ test_requires   'Test::More';
 test_requires   'Test::Exception';
 test_requires   'Test::MockModule';
 test_requires   'Cwd';
+test_requires   'Filter::CommaEquals';
 
 recommends      'Test::CheckManifest'   => '0.9';
 recommends      'Test::Perl::Critic';
