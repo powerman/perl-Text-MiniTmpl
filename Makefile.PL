@@ -3,7 +3,7 @@ use inc::Module::Install;
 name     'Text-MiniTmpl';
 all_from 'lib/Text/MiniTmpl.pm';
 
-die "Windows not supported\n" if $^O =~ /Win/;
+die "OS unsupported\n" if $^O =~ /Win/;
 
 requires        'version';
 requires        'Perl6::Export::Attrs';

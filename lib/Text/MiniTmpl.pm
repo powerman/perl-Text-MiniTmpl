@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('1.1.0');    # REMINDER: update Changes
+use version; our $VERSION = qv('1.1.1');    # REMINDER: update Changes
 
 # REMINDER: update dependencies in Makefile.PL
 use Perl6::Export::Attrs;
@@ -37,8 +37,9 @@ sub render :Export {
     my ($tmpl, %p) = @_;
     my $path = $tmpl =~ m{\A\.?/}xms ? $tmpl : "$TMPL_DIR$tmpl";
     1 while $path =~ s{(\A|/) (?!\.\.?/) [^/]+/\.\./}{$1}xms; ## no critic(ProhibitPostfixControls)
-    $CACHE{$path} ||= tmpl2code($tmpl);
-    return ${ $CACHE{$path}->(%p) };
+    my $pkg = caller;
+    $CACHE{$path}{$pkg} ||= tmpl2code($tmpl);
+    return ${ $CACHE{$path}{$pkg}->(%p) };
 }
 
 sub tmpl2code :Export {
@@ -48,8 +49,12 @@ sub tmpl2code :Export {
     my $dir = $path;
     $dir =~ s{/[^/]*\z}{/}xms;
     my $line = 1;
+    my $pkg = caller;
+    if ($pkg eq __PACKAGE__) {
+        $pkg = caller 1;
+    }
     my $e
-        = 'package '.scalar(caller).'; use warnings; use strict;'
+        = 'package '.$pkg.'; use warnings; use strict;'
         . 'sub {'
         . 'local $'.__PACKAGE__.'::__ = q{};'
         . 'local $'.__PACKAGE__."::TMPL_DIR = \"\Q$dir\E\";"
@@ -127,6 +132,7 @@ templates with (optional) parameters.
 
 Perl code in templates will be executed with:
 
+    package PACKAGE_WHERE_render_OR_tmpl2code_WAS_CALLED;
     use warnings;
     use strict;
 

@@ -18,6 +18,8 @@ README
 t/.perlcriticrc
 t/00.load.t
 t/cache.t
+t/caller.t
+t/caller2.t
 t/errline.t
 t/escape.t
 t/filter.t
@@ -30,6 +32,7 @@ t/smoke.t
 t/tmpl/bad_strict.txt
 t/tmpl/bad_syntax.txt
 t/tmpl/bad_warning.txt
+t/tmpl/caller.txt
 t/tmpl/errline/0.txt
 t/tmpl/errline/1.txt
 t/tmpl/errline/2.txt
@@ -46,6 +49,8 @@ t/tmpl/hello.txt
 t/tmpl/hello_user.txt
 t/tmpl/hello_users.txt
 t/tmpl/hello_users_abs.txt
+t/tmpl/include_caller.txt
+t/tmpl/include_caller_2.txt
 t/tmpl/subdir/include_bad_syntax.txt
 t/tmpl/unicode.txt
 t/unicode.t

@@ -1,5 +1,8 @@
 Revision history for Text-MiniTmpl
 
+1.1.1	Fri Nov 26 20:26:40 EET 2010
+	Fixed current package in templates.
+
 1.1.0	Fri Nov 26 14:34:33 EET 2010
 	Speedup in 2 times.
 	Added raw() to disable Unicode (and speedup in 1.5 times more).
