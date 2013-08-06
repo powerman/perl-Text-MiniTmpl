@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('1.1.1');    # REMINDER: update Changes
+use version; our $VERSION = qv('1.1.2');    # REMINDER: update Changes
 
 # REMINDER: update dependencies in Makefile.PL
 use Perl6::Export::Attrs;
@@ -35,8 +35,8 @@ sub raw :Export {
 
 sub render :Export {
     my ($tmpl, %p) = @_;
-    my $path = $tmpl =~ m{\A\.?/}xms ? $tmpl : "$TMPL_DIR$tmpl";
-    1 while $path =~ s{(\A|/) (?!\.\.?/) [^/]+/\.\./}{$1}xms; ## no critic(ProhibitPostfixControls)
+    my $path = $tmpl =~ m{\A[.]?/}xms ? $tmpl : "$TMPL_DIR$tmpl";
+    1 while $path =~ s{(\A|/) (?![.][.]?/) [^/]+/[.][.]/}{$1}xms; ## no critic(ProhibitPostfixControls)
     my $pkg = caller;
     $CACHE{$path}{$pkg} ||= tmpl2code($tmpl);
     return ${ $CACHE{$path}{$pkg}->(%p) };
@@ -44,8 +44,8 @@ sub render :Export {
 
 sub tmpl2code :Export {
     my ($tmpl) = @_;
-    my $path = $tmpl =~ m{\A\.?/}xms ? $tmpl : "$TMPL_DIR$tmpl";
-    1 while $path =~ s{(\A|/) (?!\.\.?/) [^/]+/\.\./}{$1}xms; ## no critic(ProhibitPostfixControls)
+    my $path = $tmpl =~ m{\A[.]?/}xms ? $tmpl : "$TMPL_DIR$tmpl";
+    1 while $path =~ s{(\A|/) (?![.][.]?/) [^/]+/[.][.]/}{$1}xms; ## no critic(ProhibitPostfixControls)
     my $dir = $path;
     $dir =~ s{/[^/]*\z}{/}xms;
     my $line = 1;
@@ -100,7 +100,11 @@ sub encode_js :Export {
 
 sub encode_js_data :Export {
     my ($s) = @_;
-    $s = encode_json($s);
+    if ($POST eq UTF8POST) {
+        $s = JSON::XS->new->encode($s);
+    } else {
+        $s = encode_json($s);
+    }
     $s =~ s{</script}{<\\/script}xmsg;
     return $s;
 }

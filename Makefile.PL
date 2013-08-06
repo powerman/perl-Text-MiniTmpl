@@ -4,6 +4,7 @@ name     'Text-MiniTmpl';
 all_from 'lib/Text/MiniTmpl.pm';
 
 die "OS unsupported\n" if $^O =~ /Win/;
+die "perl 5.8.9 unsupported\n" if $] == 5.008009;
 
 requires        'version';
 requires        'Perl6::Export::Attrs';

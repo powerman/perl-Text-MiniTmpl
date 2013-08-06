@@ -1,5 +1,8 @@
 Revision history for Text-MiniTmpl
 
+1.1.2   Tue Aug  6 22:46:21 EEST 2013
+	Fix double-encoded Unicode in encode_js_data().
+
 1.1.1	Fri Nov 26 20:26:40 EET 2010
 	Fixed current package in templates.
 
