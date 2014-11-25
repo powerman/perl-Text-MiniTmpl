@@ -20,6 +20,7 @@ t/00.load.t
 t/cache.t
 t/caller.t
 t/caller2.t
+t/encode_js.t
 t/errline.t
 t/escape.t
 t/filter.t
@@ -33,6 +34,9 @@ t/tmpl/bad_strict.txt
 t/tmpl/bad_syntax.txt
 t/tmpl/bad_warning.txt
 t/tmpl/caller.txt
+t/tmpl/encode_js_data.txt
+t/tmpl/encode_js_number.txt
+t/tmpl/encode_js_string.txt
 t/tmpl/errline/0.txt
 t/tmpl/errline/1.txt
 t/tmpl/errline/2.txt

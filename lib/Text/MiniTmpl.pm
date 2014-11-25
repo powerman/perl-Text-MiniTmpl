@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('1.1.2');    # REMINDER: update Changes
+use version; our $VERSION = qv('1.1.3');    # REMINDER: update Changes
 
 # REMINDER: update dependencies in Makefile.PL
 use Perl6::Export::Attrs;
@@ -95,6 +95,7 @@ sub encode_js :Export {
     my ($s) = @_;
     $s = quotemeta $s;
     $s =~ s/\n/n/xmsg;
+    while ($s =~ s/\G([^\\]*(?:\\[^.+-][^\\]*)*)\\([.+-])/$1$2/xmsg) {};
     return $s;
 }
 
@@ -443,7 +444,7 @@ Alex Efros  C<< <powerman-asdf@ya.ru> >>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2007-2010 Alex Efros <powerman-asdf@ya.ru>.
+Copyright 2007-2010,2014 Alex Efros <powerman-asdf@ya.ru>.
 
 This program is distributed under the MIT (X11) License:
 L<http://www.opensource.org/licenses/mit-license.php>
