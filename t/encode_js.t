@@ -112,4 +112,17 @@ is_deeply eval_js('t/tmpl/encode_js_data.txt', data_ref=>{a=>undef,b=>0,c=>[],d=
 is_deeply eval_js('t/tmpl/encode_js_data.txt', data_ref=>{'the key'=>"line1\nline2"}),
     [{'the key'=>"line1\nline2"}], 'data: {"the key"=>"line1\nline2"}';
 
+unlike render('t/tmpl/encode_js_string.txt', string=>'XSS</script>'),
+    qr{</script}ms, 'string: not contain plain </script';
+is_deeply eval_js('t/tmpl/encode_js_string.txt', string=>'XSS</script>'),
+    ['XSS</script>'], 'string: "XSS</script>"';
+unlike render('t/tmpl/encode_js_data.txt', data_ref=>['XSS</script>']),
+    qr{</script}ms, 'data: not contain plain </script';
+unlike render('t/tmpl/encode_js_data.txt', data_ref=>{'XSS</script>'=>'XSS</script>'}),
+    qr{</script}ms, 'data: not contain plain </script';
+is_deeply eval_js('t/tmpl/encode_js_data.txt', data_ref=>['XSS</script>']),
+    [['XSS</script>']], 'data: ["XSS</script>"]';
+is_deeply eval_js('t/tmpl/encode_js_data.txt', data_ref=>{'XSS</script>'=>'XSS</script>'}),
+    [{'XSS</script>'=>'XSS</script>'}], 'data: {"XSS</script>"=>"XSS</script>"}';
+
 done_testing();

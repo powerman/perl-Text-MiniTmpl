@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('1.1.3');    # REMINDER: update Changes
+use version; our $VERSION = qv('1.1.4');    # REMINDER: update Changes
 
 # REMINDER: update dependencies in Makefile.PL
 use Perl6::Export::Attrs;
