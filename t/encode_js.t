@@ -5,15 +5,23 @@ use Test::More;
 use Text::MiniTmpl qw( render encode_js encode_js_data );
 use JSON::XS qw( decode_json );
 
-my $JS;
-if (grep {-x "$_/js"} split /:/, $ENV{PATH}) {
-    $JS = 'js 2>&1 | grep -v "^js>" | sed "s/^(//;s/)$//"';
-} elsif (grep {-x "$_/node"} split /:/, $ENV{PATH}) {
-    $JS = 'node -p 2>&1';
-} else {
-    plan skip_all => 'spidermonkey/nodejs not installed';
-}
 my $JS_DUMP = '[a];'; # append this to rendered template to dump result
+my $JS;
+for my $js (grep {-x} map { glob "$_/{js,node}" } split /:/, $ENV{PATH}) {
+    if ($js =~ m{/node$}ms) {
+        $js .= ' -p 2>&1';
+    } else {
+        $js .= ' 2>&1 | grep -v "^js>" | sed "s/^(//;s/)$//"';
+    }
+    my $out = `echo 'var a=42; $JS_DUMP' | $js`;
+    if ($out =~ /42/ && $out !~ /Rhino/i) {
+        $JS = $js;
+        last;
+    }
+}
+if (!$JS) {
+    plan skip_all => 'spidermonkey/nodejs not detected';
+}
 
 
 sub eval_js {
