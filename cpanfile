@@ -12,6 +12,7 @@ on configure => sub {
 
 on test => sub {
     requires 'Filter::CommaEquals';
+    requires 'Path::Tiny';
     requires 'Test::Exception';
     requires 'Test::MockModule';
     requires 'Test::More';

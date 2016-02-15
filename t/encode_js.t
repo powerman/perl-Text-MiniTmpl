@@ -1,26 +1,25 @@
 use warnings;
 use strict;
+use utf8;
+use open qw( :std :utf8 );
 use Test::More;
 
 use Text::MiniTmpl qw( render encode_js encode_js_data );
 use JSON::XS qw( decode_json );
+use Path::Tiny qw( tempfile );
 
 my $JS_DUMP = '[a];'; # append this to rendered template to dump result
-my $JS;
-for my $js (grep {-x} map { glob "$_/node" } split /:/, $ENV{PATH}) {
-    $js .= ' -p 2>&1';
-    my $out = `echo 'var a=42; $JS_DUMP' | $js`;
-    if ($out =~ /42/ && $out !~ /Rhino/i) {
-        $JS = $js;
-        last;
-    }
-}
-plan skip_all => 'nodejs not detected' if !$JS;
+my $JSVER = `node -v 2>&1`;
+plan skip_all => 'Node.js not detected' if !$JSVER || $JSVER !~ /\bv(\d+\.\d+)/ms;
+diag "Node.js version: $JSVER";
+my $JS = 'node -p 2>&1';
 
 
 sub eval_js {
     my $js  = render(@_);
-    my $out = `echo \Q$js $JS_DUMP\E | $JS`;
+    my $tmp = tempfile();
+    $tmp->spew_utf8("$js $JS_DUMP");
+    my $out = `$JS < $tmp`;
     my $JS_STR_S = qr/'[^'\\]*(?:\\.[^'\\]*)*'/ms;
     my $JS_STR_D = qr/"[^"\\]*(?:\\.[^"\\]*)*"/ms;
     # check is output well-formed
@@ -97,7 +96,6 @@ is_deeply eval_js('t/tmpl/encode_js_string.txt', string=>'\\\\\''),
     ['\\\\\''], 'string: "\\\\\'"';
 is_deeply eval_js('t/tmpl/encode_js_string.txt', string=>"para1\n\npara2\n"),
     ["para1\n\npara2\n"], 'string: "para1\n\npara2\n"';
-use utf8;
 is_deeply eval_js('t/tmpl/encode_js_string.txt', string=>"Юникод"),
     ["Юникод"], 'string: Unicode';
 
