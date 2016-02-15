@@ -7,21 +7,15 @@ use JSON::XS qw( decode_json );
 
 my $JS_DUMP = '[a];'; # append this to rendered template to dump result
 my $JS;
-for my $js (grep {-x} map { glob "$_/{js,node}" } split /:/, $ENV{PATH}) {
-    if ($js =~ m{/node$}ms) {
-        $js .= ' -p 2>&1';
-    } else {
-        $js .= ' 2>&1 | grep -v "^js>" | sed "s/^(//;s/)$//"';
-    }
+for my $js (grep {-x} map { glob "$_/node" } split /:/, $ENV{PATH}) {
+    $js .= ' -p 2>&1';
     my $out = `echo 'var a=42; $JS_DUMP' | $js`;
     if ($out =~ /42/ && $out !~ /Rhino/i) {
         $JS = $js;
         last;
     }
 }
-if (!$JS) {
-    plan skip_all => 'spidermonkey/nodejs not detected';
-}
+plan skip_all => 'nodejs not detected' if !$JS;
 
 
 sub eval_js {

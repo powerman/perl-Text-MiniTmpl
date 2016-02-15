@@ -1,0 +1,7 @@
+/Text-MiniTmpl-*
+/.build
+/_build*
+/Build
+MYMETA.*
+!META.json
+/.prove
