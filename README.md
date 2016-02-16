@@ -7,7 +7,7 @@ Text::MiniTmpl - Compile and render templates
 
 # VERSION
 
-This document describes Text::MiniTmpl version v1.1.6
+This document describes Text::MiniTmpl version v2.0.0
 
 # SYNOPSIS
 

@@ -1,6 +1,8 @@
 Revision history for Text-MiniTmpl
 
 {{$NEXT}}
+
+v2.0.0  2016-02-16 02:54:02 EET
 	- Switch from Perl6::Export::Attrs to Export::Attrs.
 	- Switch to Dist::Milla.
 	- Reject Spidermonkey in t/encode_js.t.
