@@ -10,14 +10,14 @@ on configure => sub {
     requires 'Module::Build::Tiny', '0.034';
 };
 
-on develop => sub {
-    requires 'Test::Perl::Critic';
-};
-
 on test => sub {
     requires 'Filter::CommaEquals';
     requires 'Path::Tiny';
     requires 'Test::Exception';
     requires 'Test::MockModule';
     requires 'Test::More';
+};
+
+on develop => sub {
+    requires 'Test::Perl::Critic';
 };
