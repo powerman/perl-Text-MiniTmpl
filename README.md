@@ -131,81 +131,91 @@ Nothing by default, but all documented functions can be explicitly imported.
 
 # INTERFACE 
 
-- render( $filename, %params )
+## render
 
-    Render template from $filename with %params.
+    $html = render( $filename, %params );
 
-    This is caching wrapper around tmpl2code(), which avoid calling
-    tmpl2code() second time for same $filename.
+Render template from $filename with %params.
 
-    Example:
+This is caching wrapper around tmpl2code(), which avoid calling
+tmpl2code() second time for same $filename.
 
-        $html = render( 'template/index.html',
-            title   => $title,
-            name    => $name,
-        );
+Example:
 
-    Return STRING with rendered template.
+    $html = render( 'template/index.html',
+        title   => $title,
+        name    => $name,
+    );
 
-- tmpl2code( $filename )
+Return STRING with rendered template.
 
-    Read template from $filename (may be absolute or relative to current
-    template's directory or current working directory - see ["DESCRIPTION"](#description)),
-    compile it into ANON function.
+## tmpl2code
 
-    This function can be executed with ` ( %params ) ` parameters,
-    it will render $filename template with given ` %params ` and return
-    SCALARREF to rendered text.
+    $code = tmpl2code( $filename );
 
-    Example:
+Read template from $filename (may be absolute or relative to current
+template's directory or current working directory - see ["DESCRIPTION"](#description)),
+compile it into ANON function.
 
-        $code = tmpl2code( 'template/index.html' );
-        $html = ${ $code->( title=>$title, name=>$name ) };
+This function can be executed with ` ( %params ) ` parameters,
+it will render $filename template with given ` %params ` and return
+SCALARREF to rendered text.
 
-    Return CODEREF to that function.
+Example:
 
-- raw( $is\_raw )
+    $code = tmpl2code( 'template/index.html' );
+    $html = ${ $code->( title=>$title, name=>$name ) };
 
-    If $is\_raw TRUE disable Unicode support.
-    To enable Unicode again call raw() with $is\_raw FALSE.
+Return CODEREF to that function.
 
-    **Disabling Unicode support will speedup this module in about 1.5 times!**
+## raw
 
-    When Unicode support disabled your parameters used to render template will
-    be used in template AS IS, without attempt to encode them to UTF8.
-    This mean you shouldn't use perl Unicode scalars in these parameters anymore.
+    raw( $is_raw );
 
-    This affect only templates processed by tmpl2code() after calling raw()
-    (beware caching effect of render()).
+If $is\_raw TRUE disable Unicode support.
+To enable Unicode again call raw() with $is\_raw FALSE.
 
-- encode\_js( $scalar )
+**Disabling Unicode support will speedup this module in about 1.5 times!**
 
-    Encode $scalar (string or number) for inserting into JavaScript code
-    (usually inside HTML templates).
+When Unicode support disabled your parameters used to render template will
+be used in template AS IS, without attempt to encode them to UTF8.
+This mean you shouldn't use perl Unicode scalars in these parameters anymore.
 
-    Example:
+This affect only templates processed by tmpl2code() after calling raw()
+(beware caching effect of render()).
 
-        <script>
-        var int_from_perl =  #~ encode_js($number) ~#;
-        var str_from_perl = '#~ encode_js($string) ~#';
-        </script>
+## encode\_js
 
-    Return encoded string.
+    $js = encode_js( $scalar );
 
-- encode\_js\_data( $complex )
+Encode $scalar (string or number) for inserting into JavaScript code
+(usually inside HTML templates).
 
-    Encode $complex data structure (HASHREF, ARRAYREF, etc. - any data type
-    supported by JSON::XS) for inserting into JavaScript code (usually inside
-    HTML templates).
+Example:
 
-    Example:
+    <script>
+    var int_from_perl =  #~ encode_js($number) ~#;
+    var str_from_perl = '#~ encode_js($string) ~#';
+    </script>
 
-        <script>
-        var hash_from_perl  = #~ encode_js_data( \%hash ) ~#;
-        var array_from_perl = #~ encode_js_data( \@array ) ~#;
-        </script>
+Return encoded string.
 
-    Return encoded string.
+## encode\_js\_data
+
+    $js_data = encode_js_data( $complex );
+
+Encode $complex data structure (HASHREF, ARRAYREF, etc. - any data type
+supported by JSON::XS) for inserting into JavaScript code (usually inside
+HTML templates).
+
+Example:
+
+    <script>
+    var hash_from_perl  = #~ encode_js_data( \%hash ) ~#;
+    var array_from_perl = #~ encode_js_data( \@array ) ~#;
+    </script>
+
+Return encoded string.
 
 # SPEED AND SIZE
 
@@ -299,7 +309,7 @@ Alex Efros &lt;powerman@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2007-2014 by Alex Efros &lt;powerman@cpan.org>.
+This software is Copyright (c) 2007- by Alex Efros &lt;powerman@cpan.org>.
 
 This is free software, licensed under:
 
