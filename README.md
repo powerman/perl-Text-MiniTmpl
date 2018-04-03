@@ -7,7 +7,7 @@ Text::MiniTmpl - Compile and render templates
 
 # VERSION
 
-This document describes Text::MiniTmpl version v2.0.0
+This document describes Text::MiniTmpl version v2.0.1
 
 # SYNOPSIS
 
@@ -305,11 +305,11 @@ Feel free to fork the repository and submit pull requests.
 
 # AUTHOR
 
-Alex Efros &lt;powerman@cpan.org>
+Alex Efros <powerman@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2007- by Alex Efros &lt;powerman@cpan.org>.
+This software is Copyright (c) 2007- by Alex Efros <powerman@cpan.org>.
 
 This is free software, licensed under:
 

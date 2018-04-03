@@ -5,7 +5,7 @@ use strict;
 use utf8;
 use Carp;
 
-our $VERSION = 'v2.0.0';
+our $VERSION = 'v2.0.1';
 
 use Export::Attrs;
 use JSON::XS qw( encode_json );
@@ -123,7 +123,7 @@ Text::MiniTmpl - Compile and render templates
 
 =head1 VERSION
 
-This document describes Text::MiniTmpl version v2.0.0
+This document describes Text::MiniTmpl version v2.0.1
 
 
 =head1 SYNOPSIS
